@@ -10,9 +10,31 @@
             android:layout_height="match_parent"/>
 
     <Button
-            android:id="@+id/testBtn"
+            android:id="@+id/addDataInBtn"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
             android:background="#80E2D875"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/addDataOutBtn"
+            android:layout_margin="20dp"
+            android:text="addDataToService in"/>
+
+    <Button
+            android:id="@+id/addDataOutBtn"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:background="#80E2D875"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/testBtn"
+            android:layout_margin="20dp"
+            android:text="addDataToService out"/>
+
+    <Button
+            android:id="@+id/testBtn"
             android:text="Test"
+            android:background="#80E2D875"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="20dp"

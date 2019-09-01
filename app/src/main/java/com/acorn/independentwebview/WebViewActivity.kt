@@ -8,10 +8,23 @@ import android.os.Bundle
 import android.os.IBinder
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.acorn.independentwebview.service.MyService
 import kotlinx.android.synthetic.main.activity_webview.*
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var aidlInterface: IMyAidlInterface
+    private var isConn = false
+    private val serviceConn = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName?) {
+            isConn = false
+        }
+
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            aidlInterface = IMyAidlInterface.Stub.asInterface(service)
+            isConn = true
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +32,30 @@ class WebViewActivity : AppCompatActivity() {
         initWebView()
         bindService()
 
+        addDataInBtn.setOnClickListener {
+            if (isConn) {
+                //这里In是有效的,这里是客户端
+                val book = Book("web1")
+                aidlInterface.addBookIn(book)
+                Toast.makeText(this, "客户端不受影响:${book.name}", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        addDataOutBtn.setOnClickListener {
+            if (isConn) {
+                //这里out是有效的,这里是客户端
+                val book = Book("web2")
+                aidlInterface.addBookOut(book)
+                Toast.makeText(this, "客户端受到影响:${book.name}", Toast.LENGTH_LONG).show()
+            }
+        }
+
         testBtn.setOnClickListener {
-            Toast.makeText(this, aidlInterface.myAction("wang"), Toast.LENGTH_LONG).show()
+            if (isConn) {
+                Toast.makeText(this, aidlInterface.requestBookList().map {
+                    it.name
+                }.joinToString(), Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -34,19 +69,13 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun bindService() {
-        bindService(Intent("com.acorn.server"), object : ServiceConnection {
-            override fun onServiceDisconnected(name: ComponentName?) {
-            }
-
-            override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-                aidlInterface = IMyAidlInterface.Stub.asInterface(service)
-            }
-
-        }, Context.BIND_AUTO_CREATE)
+        bindService(Intent(this, MyService::class.java), serviceConn, Context.BIND_AUTO_CREATE)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        if (isConn)
+            unbindService(serviceConn)
         webView.destroy()
     }
 }
