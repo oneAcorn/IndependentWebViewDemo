@@ -10,6 +10,18 @@
             android:layout_height="match_parent"/>
 
     <Button
+            android:id="@+id/testWebBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#808FF3D0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="50dp"
+            android:text="测试"
+            />
+
+    <Button
             android:id="@+id/addDataInBtn"
             android:textAllCaps="false"
             android:layout_width="wrap_content"

@@ -58,6 +58,28 @@ class MainActivity : AppCompatActivity() {
         webviewBtn.setOnClickListener {
             startActivity(Intent(this@MainActivity, WebViewActivity::class.java))
         }
+
+        loadUrlJsBtn.setOnClickListener {
+            startWebViewActivity(1)
+        }
+
+        evaluateJsBtn.setOnClickListener {
+            startWebViewActivity(2)
+        }
+
+        jsInterfaceBtn.setOnClickListener {
+            startWebViewActivity(3)
+        }
+
+        promptBtn.setOnClickListener {
+            startWebViewActivity(4)
+        }
+    }
+
+    private fun startWebViewActivity(type: Int) {
+        val intent = Intent(this, WebViewActivity::class.java)
+        intent.putExtra("type", type)
+        startActivity(intent)
     }
 
     private fun bindService() {
