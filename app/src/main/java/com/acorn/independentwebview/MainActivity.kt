@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
 import android.widget.Toast
+import com.acorn.independentwebview.provider.SPHelper
 import com.acorn.independentwebview.service.MyService
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bindService()
+        SPHelper.init(application)
 
         addDataBtn.setOnClickListener {
             if (isConn) {
@@ -73,6 +75,10 @@ class MainActivity : AppCompatActivity() {
 
         promptBtn.setOnClickListener {
             startWebViewActivity(4)
+        }
+
+        contentProviderBtn.setOnClickListener {
+            SPHelper.save("token", "我是token")
         }
     }
 

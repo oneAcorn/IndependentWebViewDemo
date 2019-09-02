@@ -22,6 +22,17 @@
             />
 
     <Button
+            android:id="@+id/getTokenBtn"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:background="#80E2D875"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/addDataInBtn"
+            android:layout_margin="20dp"
+            android:text="getToken from ContentProvider"/>
+
+    <Button
             android:id="@+id/addDataInBtn"
             android:textAllCaps="false"
             android:layout_width="wrap_content"

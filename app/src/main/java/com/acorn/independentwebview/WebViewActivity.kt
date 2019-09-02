@@ -13,6 +13,7 @@ import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Toast
+import com.acorn.independentwebview.provider.SPHelper
 import com.acorn.independentwebview.service.MyService
 import kotlinx.android.synthetic.main.activity_webview.*
 
@@ -45,6 +46,7 @@ class WebViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_webview)
         initWebView()
         bindService()
+        SPHelper.init(application)
 
         addDataInBtn.setOnClickListener {
             if (isConn) {
@@ -70,6 +72,11 @@ class WebViewActivity : AppCompatActivity() {
                     it.name
                 }.joinToString(), Toast.LENGTH_LONG).show()
             }
+        }
+
+        getTokenBtn.setOnClickListener {
+            Toast.makeText(this, "通过ContentProvider获取token:${SPHelper.getString("token", "默认值")}", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -123,7 +130,7 @@ class WebViewActivity : AppCompatActivity() {
             webView.loadUrl("file:///android_asset/callAndroid.html")
         } else if (type == 4) {
             webView.loadUrl("file:///android_asset/prompt.html")
-            webView.webChromeClient=object : WebChromeClient(){
+            webView.webChromeClient = object : WebChromeClient() {
                 // 参数message:代表promt（）的内容（不是url）
                 // 参数result:代表输入框的返回值
                 override fun onJsPrompt(

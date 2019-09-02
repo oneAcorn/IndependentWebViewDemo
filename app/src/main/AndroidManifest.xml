@@ -30,6 +30,10 @@
                 />
 
         <service android:name=".service.MyService"/>
+        <provider
+                android:authorities="com.acorn.provider"
+                android:name=".provider.SPContentProvider"
+                />
     </application>
 
 </manifest>
