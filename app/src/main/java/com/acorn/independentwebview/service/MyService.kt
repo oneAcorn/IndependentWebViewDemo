@@ -3,14 +3,17 @@ package com.acorn.independentwebview.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import com.acorn.independentwebview.Book
 import com.acorn.independentwebview.IMyAidlInterface
 
 class MyService : Service() {
+    private val TAG = "MyService"
     private val bookList = mutableListOf<Book>()
 
     override fun onCreate() {
         super.onCreate()
+        Log.i(TAG, "onCreate")
         initData()
     }
 
@@ -23,7 +26,18 @@ class MyService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? {
+        Log.i(TAG, "onBind")
         return MyBinder()
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.i(TAG, "onUnbind")
+        return super.onUnbind(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy")
     }
 
     inner class MyBinder : IMyAidlInterface.Stub() {
