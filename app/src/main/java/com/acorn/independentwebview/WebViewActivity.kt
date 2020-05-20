@@ -50,7 +50,11 @@ class WebViewActivity : AppCompatActivity() {
         initWebView()
         bindService()
         SPHelper.init(application)
-        logI("是否是主进程:${isLocalAppProcess(this)}")
+        logI("WebViewActivity 是否是主进程:${isLocalAppProcess(this)}")
+
+        testOpenActivityBtn.setOnClickListener {//打开新的Activity
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         addDataInBtn.setOnClickListener {
             if (isConn) {

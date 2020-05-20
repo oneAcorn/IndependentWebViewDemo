@@ -10,6 +10,8 @@ import android.os.IBinder
 import android.widget.Toast
 import com.acorn.independentwebview.provider.SPHelper
 import com.acorn.independentwebview.service.MyService
+import com.acorn.independentwebview.utils.isLocalAppProcess
+import com.acorn.independentwebview.utils.logI
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bindService()
         SPHelper.init(application)
+        logI("MainActivity 是否是主进程:${isLocalAppProcess(this)}")
 
         addDataBtn.setOnClickListener {
             if (isConn) {

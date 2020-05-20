@@ -9,6 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+
     <Button
             android:id="@+id/testWebBtn"
             android:layout_width="wrap_content"
@@ -20,6 +21,17 @@
             android:layout_marginLeft="50dp"
             android:text="测试"
             />
+
+    <Button
+        android:id="@+id/testOpenActivityBtn"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:background="#80E2D875"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/getTokenBtn"
+        android:layout_margin="20dp"
+        android:text="打开新的Activity"/>
 
     <Button
             android:id="@+id/getTokenBtn"
