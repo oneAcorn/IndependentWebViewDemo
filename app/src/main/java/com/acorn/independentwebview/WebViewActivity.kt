@@ -15,11 +15,14 @@ import android.webkit.WebView
 import android.widget.Toast
 import com.acorn.independentwebview.provider.SPHelper
 import com.acorn.independentwebview.service.MyService
+import com.acorn.independentwebview.utils.isLocalAppProcess
+import com.acorn.independentwebview.utils.logI
 import kotlinx.android.synthetic.main.activity_webview.*
 
 
 class WebViewActivity : AppCompatActivity() {
     private lateinit var aidlInterface: IMyAidlInterface
+
     /**
      * 1 通过loadUrl()方法调用js
      * 2 通过evaluateJavascript()方法调用js
@@ -47,6 +50,7 @@ class WebViewActivity : AppCompatActivity() {
         initWebView()
         bindService()
         SPHelper.init(application)
+        logI("是否是主进程:${isLocalAppProcess(this)}")
 
         addDataInBtn.setOnClickListener {
             if (isConn) {
@@ -75,7 +79,11 @@ class WebViewActivity : AppCompatActivity() {
         }
 
         getTokenBtn.setOnClickListener {
-            Toast.makeText(this, "通过ContentProvider获取token:${SPHelper.getString("token", "默认值")}", Toast.LENGTH_LONG)
+            Toast.makeText(
+                this,
+                "通过ContentProvider获取token:${SPHelper.getString("token", "默认值")}",
+                Toast.LENGTH_LONG
+            )
                 .show()
         }
     }
@@ -101,7 +109,8 @@ class WebViewActivity : AppCompatActivity() {
                 } else if (type == 2) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //此方法最低支持android 4.4
                         webView.evaluateJavascript("javascript:callJS()") {
-                            Toast.makeText(this@WebViewActivity, "js回调$it", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@WebViewActivity, "js回调$it", Toast.LENGTH_LONG)
+                                .show()
                         }
                     }
                 }
@@ -112,7 +121,12 @@ class WebViewActivity : AppCompatActivity() {
             // 通过设置WebChromeClient对象处理JavaScript的对话框
             //设置响应js 的Alert()函数
             webView.webChromeClient = object : WebChromeClient() {
-                override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+                override fun onJsAlert(
+                    view: WebView?,
+                    url: String?,
+                    message: String?,
+                    result: JsResult?
+                ): Boolean {
                     val b = AlertDialog.Builder(this@WebViewActivity)
                     b.setTitle("Alert")
                     b.setMessage(message)

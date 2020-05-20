@@ -1,4 +1,4 @@
-package com.acorn.independentwebview
+package com.acorn.independentwebview.utils
 
 import android.util.Log
 
