@@ -13,6 +13,9 @@ import com.acorn.independentwebview.service.MyService
 import com.acorn.independentwebview.utils.isLocalAppProcess
 import com.acorn.independentwebview.utils.logI
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : AppCompatActivity() {
     private lateinit var aidlInterface: IMyAidlInterface
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         bindService()
         SPHelper.init(application)
+        EventBus.getDefault().register(this)
         logI("MainActivity 是否是主进程:${isLocalAppProcess(this)}")
 
         addDataBtn.setOnClickListener {
@@ -85,6 +89,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(msg: String) { //收不到跨进程发过来的消息
+        Toast.makeText(this, "收到消息:$msg", Toast.LENGTH_SHORT).show()
+    }
+
     private fun startWebViewActivity(type: Int) {
         val intent = Intent(this, WebViewActivity::class.java)
         intent.putExtra("type", type)
@@ -99,5 +108,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         if (isConn)
             unbindService(serviceConn)
+        EventBus.getDefault().unregister(this)
     }
 }

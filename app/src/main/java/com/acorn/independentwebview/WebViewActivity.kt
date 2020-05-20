@@ -18,9 +18,10 @@ import com.acorn.independentwebview.service.MyService
 import com.acorn.independentwebview.utils.isLocalAppProcess
 import com.acorn.independentwebview.utils.logI
 import kotlinx.android.synthetic.main.activity_webview.*
+import org.greenrobot.eventbus.EventBus
 
 
-class WebViewActivity : AppCompatActivity() {
+class WebViewActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var aidlInterface: IMyAidlInterface
 
     /**
@@ -52,44 +53,12 @@ class WebViewActivity : AppCompatActivity() {
         SPHelper.init(application)
         logI("WebViewActivity 是否是主进程:${isLocalAppProcess(this)}")
 
-        testOpenActivityBtn.setOnClickListener {//打开新的Activity
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
-        addDataInBtn.setOnClickListener {
-            if (isConn) {
-                //这里In是有效的,这里是客户端
-                val book = Book("web1")
-                aidlInterface.addBookIn(book)
-                Toast.makeText(this, "客户端不受影响:${book.name}", Toast.LENGTH_LONG).show()
-            }
-        }
-
-        addDataOutBtn.setOnClickListener {
-            if (isConn) {
-                //这里out是有效的,这里是客户端
-                val book = Book("web2")
-                aidlInterface.addBookOut(book)
-                Toast.makeText(this, "客户端受到影响:${book.name}", Toast.LENGTH_LONG).show()
-            }
-        }
-
-        testBtn.setOnClickListener {
-            if (isConn) {
-                Toast.makeText(this, aidlInterface.requestBookList().map {
-                    it.name
-                }.joinToString(), Toast.LENGTH_LONG).show()
-            }
-        }
-
-        getTokenBtn.setOnClickListener {
-            Toast.makeText(
-                this,
-                "通过ContentProvider获取token:${SPHelper.getString("token", "默认值")}",
-                Toast.LENGTH_LONG
-            )
-                .show()
-        }
+        testOpenActivityBtn.setOnClickListener(this)
+        testEventBusBtn.setOnClickListener(this)
+        addDataInBtn.setOnClickListener(this)
+        addDataOutBtn.setOnClickListener(this)
+        testBtn.setOnClickListener(this)
+        getTokenBtn.setOnClickListener(this)
     }
 
     private fun initWebView() {
@@ -198,5 +167,47 @@ class WebViewActivity : AppCompatActivity() {
         if (isConn)
             unbindService(serviceConn)
         webView.destroy()
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.testOpenActivityBtn -> { //测试打开新的Activity
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+            R.id.testEventBusBtn -> { //测试Eventbus跨进程能否通信
+                //看来没用..
+                EventBus.getDefault().post("abc")
+            }
+            R.id.addDataInBtn -> { //使用in传递数据
+                if (isConn) {
+                    //这里In是有效的,这里是客户端
+                    val book = Book("web1")
+                    aidlInterface.addBookIn(book)
+                    Toast.makeText(this, "客户端不受影响:${book.name}", Toast.LENGTH_LONG).show()
+                }
+            }
+            R.id.addDataOutBtn -> { //使用out传递数据
+                if (isConn) {
+                    //这里out是有效的,这里是客户端
+                    val book = Book("web2")
+                    aidlInterface.addBookOut(book)
+                    Toast.makeText(this, "客户端受到影响:${book.name}", Toast.LENGTH_LONG).show()
+                }
+            }
+            R.id.testBtn -> { //测试查询接口
+                if (isConn) {
+                    Toast.makeText(this, aidlInterface.requestBookList().map {
+                        it.name
+                    }.joinToString(), Toast.LENGTH_LONG).show()
+                }
+            }
+            R.id.getTokenBtn -> { //sharedprefrces+contentprovider测试
+                Toast.makeText(
+                    this,
+                    "通过ContentProvider获取token:${SPHelper.getString("token", "默认值")}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 }

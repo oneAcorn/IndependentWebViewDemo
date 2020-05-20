@@ -1,78 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <WebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
     <Button
-            android:id="@+id/testWebBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#808FF3D0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="100dp"
-            android:layout_marginLeft="50dp"
-            android:text="测试"
-            />
-
-    <Button
-        android:id="@+id/testOpenActivityBtn"
-        android:textAllCaps="false"
+        android:id="@+id/testWebBtn"
         android:layout_width="wrap_content"
-        android:background="#80E2D875"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/getTokenBtn"
-        android:layout_margin="20dp"
-        android:text="打开新的Activity"/>
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="100dp"
+        android:background="#808FF3D0"
+        android:text="测试"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-            android:id="@+id/getTokenBtn"
-            android:textAllCaps="false"
-            android:layout_width="wrap_content"
-            android:background="#80E2D875"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/addDataInBtn"
-            android:layout_margin="20dp"
-            android:text="getToken from ContentProvider"/>
+            android:orientation="vertical">
 
-    <Button
-            android:id="@+id/addDataInBtn"
-            android:textAllCaps="false"
-            android:layout_width="wrap_content"
-            android:background="#80E2D875"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/addDataOutBtn"
-            android:layout_margin="20dp"
-            android:text="addDataToService in"/>
+            <Button
+                android:id="@+id/testOpenActivityBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="打开新的Activity"
+                android:textAllCaps="false" />
 
-    <Button
-            android:id="@+id/addDataOutBtn"
-            android:textAllCaps="false"
-            android:layout_width="wrap_content"
-            android:background="#80E2D875"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/testBtn"
-            android:layout_margin="20dp"
-            android:text="addDataToService out"/>
+            <Button
+                android:id="@+id/testEventBusBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test EventBus"
+                android:textAllCaps="false" />
 
-    <Button
-            android:id="@+id/testBtn"
-            android:text="Test"
-            android:background="#80E2D875"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/getTokenBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="getToken from ContentProvider"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/addDataInBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="addDataToService in"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/addDataOutBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="addDataToService out"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/testBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Test" />
+        </LinearLayout>
+    </ScrollView>
+
+
 </android.support.constraint.ConstraintLayout>
