@@ -12,6 +12,7 @@ import com.acorn.independentwebview.provider.SPHelper
 import com.acorn.independentwebview.service.MyService
 import com.acorn.independentwebview.utils.isLocalAppProcess
 import com.acorn.independentwebview.utils.logI
+import com.tencent.mmkv.MMKV
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -86,6 +87,19 @@ class MainActivity : AppCompatActivity() {
 
         contentProviderBtn.setOnClickListener {
             SPHelper.save("token", "我是token")
+        }
+
+        mmkvSaveBtn.setOnClickListener {
+            val mmkv = MMKV.defaultMMKV()
+            mmkv.encode("key1", "我是字符串")
+            mmkv.encode("key2", 30)
+        }
+
+        mmkvReadBtn.setOnClickListener {
+            val mmkv = MMKV.mmkvWithID("processId",MMKV.MULTI_PROCESS_MODE)
+            val msg = "key1:${mmkv.decodeString("key1")},key2:${mmkv.decodeInt("key2")}"
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+            logI(msg)
         }
     }
 

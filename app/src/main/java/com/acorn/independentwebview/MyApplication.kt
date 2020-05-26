@@ -3,6 +3,7 @@ package com.acorn.independentwebview
 import android.app.Application
 import com.acorn.independentwebview.utils.isLocalAppProcess
 import com.acorn.independentwebview.utils.logI
+import com.tencent.mmkv.MMKV
 
 /**
  * Created by acorn on 2020/5/20.
@@ -19,5 +20,7 @@ class MyApplication : Application() {
         // 方法如下"方法 在Application的onCreate()初始化中增加判断代码，
         // 当不是的当前应用进程直接return,不要走下面逻辑代码
         logI("Application onCreate 是否为主线程${isLocalAppProcess(this)}")
+
+        MMKV.initialize(this)
     }
 }

@@ -71,7 +71,22 @@
                 android:id="@+id/testBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Test" />
+                android:text="Test"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/mmkvWriteBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MMKV write"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/mmkvReadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MMKV read"
+                android:textAllCaps="false" />
         </LinearLayout>
     </ScrollView>
 

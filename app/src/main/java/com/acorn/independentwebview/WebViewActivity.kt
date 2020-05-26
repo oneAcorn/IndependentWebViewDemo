@@ -17,6 +17,7 @@ import com.acorn.independentwebview.provider.SPHelper
 import com.acorn.independentwebview.service.MyService
 import com.acorn.independentwebview.utils.isLocalAppProcess
 import com.acorn.independentwebview.utils.logI
+import com.tencent.mmkv.MMKV
 import kotlinx.android.synthetic.main.activity_webview.*
 import org.greenrobot.eventbus.EventBus
 
@@ -59,6 +60,8 @@ class WebViewActivity : AppCompatActivity(), View.OnClickListener {
         addDataOutBtn.setOnClickListener(this)
         testBtn.setOnClickListener(this)
         getTokenBtn.setOnClickListener(this)
+        mmkvWriteBtn.setOnClickListener(this)
+        mmkvReadBtn.setOnClickListener(this)
     }
 
     private fun initWebView() {
@@ -207,6 +210,17 @@ class WebViewActivity : AppCompatActivity(), View.OnClickListener {
                     "通过ContentProvider获取token:${SPHelper.getString("token", "默认值")}",
                     Toast.LENGTH_LONG
                 ).show()
+            }
+            R.id.mmkvWriteBtn -> {
+                val mmkv = MMKV.mmkvWithID("processId",MMKV.MULTI_PROCESS_MODE)
+                mmkv.encode("key1", "web修改")
+                mmkv.encode("key2", 31)
+            }
+            R.id.mmkvReadBtn -> {
+                val mmkv = MMKV.mmkvWithID("processId",MMKV.MULTI_PROCESS_MODE)
+                val msg = "key1:${mmkv.decodeString("key1")},key2:${mmkv.decodeInt("key2")}"
+                Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+                logI(msg)
             }
         }
     }

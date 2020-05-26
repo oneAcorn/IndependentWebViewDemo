@@ -98,5 +98,25 @@
                 android:text="Sp加ContentProvider进程间通信"
                 android:textAllCaps="false"
                 />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--MMKV进程间通信--"
+            />
+        <Button
+            android:id="@+id/mmkvSaveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="存储"
+            android:textAllCaps="false"
+            />
+        <Button
+            android:id="@+id/mmkvReadBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="读取"
+            android:textAllCaps="false"
+            />
     </LinearLayout>
 </ScrollView>
