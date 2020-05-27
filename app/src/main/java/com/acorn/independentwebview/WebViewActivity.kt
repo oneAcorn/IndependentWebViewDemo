@@ -213,7 +213,8 @@ class WebViewActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.mmkvWriteBtn -> {
                 val mmkv = MMKV.mmkvWithID("processId",MMKV.MULTI_PROCESS_MODE)
-                mmkv.encode("key1", "web修改")
+                mmkv.removeValueForKey("key1")
+//                mmkv.encode("key1", "web修改")
                 mmkv.encode("key2", 31)
             }
             R.id.mmkvReadBtn -> {

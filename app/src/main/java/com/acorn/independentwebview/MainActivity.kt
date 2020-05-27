@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mmkvSaveBtn.setOnClickListener {
-            val mmkv = MMKV.defaultMMKV()
+            val mmkv = MMKV.mmkvWithID("processId",MMKV.MULTI_PROCESS_MODE)
             mmkv.encode("key1", "我是字符串")
             mmkv.encode("key2", 30)
         }
