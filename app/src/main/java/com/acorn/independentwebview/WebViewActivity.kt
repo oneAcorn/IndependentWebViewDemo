@@ -116,7 +116,7 @@ class WebViewActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         } else if (type == 3) {
-            webView.addJavascriptInterface(AndroidToJs(), "test")
+            webView.addJavascriptInterface(AndroidToJs(this), "test")
             webView.loadUrl("file:///android_asset/callAndroid.html")
         } else if (type == 4) {
             webView.loadUrl("file:///android_asset/prompt.html")
