@@ -90,16 +90,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         mmkvSaveBtn.setOnClickListener {
-            val mmkv = MMKV.mmkvWithID("processId",MMKV.MULTI_PROCESS_MODE)
+            val mmkv = MMKV.mmkvWithID("processId", MMKV.MULTI_PROCESS_MODE)
             mmkv.encode("key1", "我是字符串")
             mmkv.encode("key2", 30)
         }
 
         mmkvReadBtn.setOnClickListener {
-            val mmkv = MMKV.mmkvWithID("processId",MMKV.MULTI_PROCESS_MODE)
+            val mmkv = MMKV.mmkvWithID("processId", MMKV.MULTI_PROCESS_MODE)
             val msg = "key1:${mmkv.decodeString("key1")},key2:${mmkv.decodeInt("key2")}"
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
             logI(msg)
+        }
+        messengerBtn.setOnClickListener {
+            startActivity(Intent(this, MessengerActivity::class.java))
         }
     }
 

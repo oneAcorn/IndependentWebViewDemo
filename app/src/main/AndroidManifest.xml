@@ -29,7 +29,14 @@
             android:process=":web"
             android:screenOrientation="fullSensor" />
 
+        <activity
+            android:name=".MessengerActivity"
+            android:process=":msg"
+            android:screenOrientation="fullSensor" />
+
         <service android:name=".service.MyService" />
+        <service android:name=".messenger.MessengerService" />
+
         <provider
             android:name=".provider.SPContentProvider"
             android:authorities="com.acorn.provider" />
